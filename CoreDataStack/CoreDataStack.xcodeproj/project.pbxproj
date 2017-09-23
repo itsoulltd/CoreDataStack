@@ -22,6 +22,18 @@
 		26456E971F766145003AEF53 /* Queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 26456E7C1F766118003AEF53 /* Queue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26456E981F766145003AEF53 /* Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 26456E7E1F766118003AEF53 /* Stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26456E991F766159003AEF53 /* CSLogTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 26456E761F766118003AEF53 /* CSLogTracker.h */; };
+		26456F211F766786003AEF53 /* NGCoreObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E821F766118003AEF53 /* NGCoreObject.m */; };
+		26456F221F766786003AEF53 /* NGManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E841F766118003AEF53 /* NGManagedObject.m */; };
+		26456F231F766786003AEF53 /* NGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E861F766118003AEF53 /* NGObject.m */; };
+		26456F241F766786003AEF53 /* NGCoreDataContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E891F766118003AEF53 /* NGCoreDataContext.m */; };
+		26456F251F766786003AEF53 /* NGKeyedContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E8B1F766118003AEF53 /* NGKeyedContext.m */; };
+		26456F261F766786003AEF53 /* CSDebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E731F766118003AEF53 /* CSDebugLog.m */; };
+		26456F271F766786003AEF53 /* CSExceptionLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E751F766118003AEF53 /* CSExceptionLog.m */; };
+		26456F281F766786003AEF53 /* CSLogTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E771F766118003AEF53 /* CSLogTracker.m */; };
+		26456F291F766786003AEF53 /* NSArray+FilterAndSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E791F766118003AEF53 /* NSArray+FilterAndSorting.m */; };
+		26456F2A1F766786003AEF53 /* PropertyList.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E7B1F766118003AEF53 /* PropertyList.m */; };
+		26456F2B1F766786003AEF53 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E7D1F766118003AEF53 /* Queue.m */; };
+		26456F2C1F766786003AEF53 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 26456E7F1F766118003AEF53 /* Stack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -243,6 +255,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26456F211F766786003AEF53 /* NGCoreObject.m in Sources */,
+				26456F221F766786003AEF53 /* NGManagedObject.m in Sources */,
+				26456F231F766786003AEF53 /* NGObject.m in Sources */,
+				26456F241F766786003AEF53 /* NGCoreDataContext.m in Sources */,
+				26456F251F766786003AEF53 /* NGKeyedContext.m in Sources */,
+				26456F261F766786003AEF53 /* CSDebugLog.m in Sources */,
+				26456F271F766786003AEF53 /* CSExceptionLog.m in Sources */,
+				26456F281F766786003AEF53 /* CSLogTracker.m in Sources */,
+				26456F291F766786003AEF53 /* NSArray+FilterAndSorting.m in Sources */,
+				26456F2A1F766786003AEF53 /* PropertyList.m in Sources */,
+				26456F2B1F766786003AEF53 /* Queue.m in Sources */,
+				26456F2C1F766786003AEF53 /* Stack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
