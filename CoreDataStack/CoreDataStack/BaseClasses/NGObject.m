@@ -330,6 +330,10 @@
             result = [self serializeDate:value];
         }
     }
+    else if ([value isKindOfClass:[NSData class]]){
+        NSString *encoded = [(NSData*)value base64EncodedStringWithOptions:0];
+        result = encoded;
+    }
     else if ([value isKindOfClass:[NSString class]]
              || [value isKindOfClass:[NSNumber class]]
              || [value respondsToSelector:@selector(encodeWithCoder:)]){
