@@ -1,25 +1,36 @@
 //
-//  ViewController.swift
-//  CoreDataStackExample
+//  CoreDataStackTests.swift
+//  CoreDataStackTests
 //
-//  Created by Towhid Islam on 10/14/17.
+//  Created by Towhid Islam on 11/11/17.
 //  Copyright © 2017 Towhid Islam. All rights reserved.
 //
 
-import UIKit
+import XCTest
+import CoreDataStack
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        //testStudents()
-        testCar()
+class CoreDataStackTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    func testExample() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testPerformanceExample() {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
     }
     
     func testStudents(){
@@ -28,7 +39,7 @@ class ViewController: UIViewController {
         Student.add(["name":"James", "age": 18])
         studets = Student.getAllStudents()
         print("Studets : \(studets.count)")
-    
+        
         let student = studets.first { (student) -> Bool in
             return student.name == "James"
         }
@@ -41,7 +52,7 @@ class ViewController: UIViewController {
             print(james.serializeIntoInfo())
         }
     }
-
+    
     func testCar(){
         //DriveInfo is a subclass of KGObject which we want to store in coredata
         let driverInfo = DriverInfo()
@@ -82,4 +93,3 @@ class ViewController: UIViewController {
     }
     
 }
-

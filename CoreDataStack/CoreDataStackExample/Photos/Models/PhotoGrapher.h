@@ -24,19 +24,7 @@
 
 @interface PhotoGrapher (CoreDataGeneratedAccessors)
 
-- (void)insertObject:(Photo *)value inPhotosAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromPhotosAtIndex:(NSUInteger)idx;
-- (void)insertPhotos:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removePhotosAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInPhotosAtIndex:(NSUInteger)idx withObject:(Photo *)value;
-- (void)replacePhotosAtIndexes:(NSIndexSet *)indexes withPhotos:(NSArray *)values;
 - (void)addPhotosObject:(Photo *)value;
-- (void)removePhotosObject:(Photo *)value;
-- (void)addPhotos:(NSOrderedSet *)values;
-- (void)removePhotos:(NSOrderedSet *)values;
 - (void)addAddressesObject:(Address *)value;
-- (void)removeAddressesObject:(Address *)value;
-- (void)addAddresses:(NSSet *)values;
-- (void)removeAddresses:(NSSet *)values;
-
++ (PhotoGrapher*) findByName:(NSString*)name context:(NSManagedObjectContext*)context;
 @end

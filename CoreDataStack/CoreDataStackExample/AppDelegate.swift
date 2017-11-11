@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         CSDebugLog.setDebugModeOn(false)
-        let vc = PhotoListController(nibName: "PhotoListController", bundle: nil)
-        window?.rootViewController = UINavigationController(rootViewController: vc)
+        //No Need ... Use Storyboard.
+        //let vc = PhotoListController(nibName: "PhotoListController", bundle: nil)
+        //window?.rootViewController = UINavigationController(rootViewController: vc)
         return true
     }
 

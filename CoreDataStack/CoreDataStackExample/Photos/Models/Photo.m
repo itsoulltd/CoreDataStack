@@ -18,4 +18,23 @@
 @dynamic datetimeAtTook;
 @dynamic whoTook;
 
+- (NSDate *)updateDate:(NSString *)dateStr{
+    //should be formated by NSDateFormatter
+    return [NSDate date];
+}
+
+- (NSString *)serializeDate:(NSDate *)date{
+    //should be formated by NSDateFormatter
+    return [date description];
+}
+
+- (id)serializeValue:(id)value forKey:(NSString *)key{
+    //whoTook is not Json writable, so we skiped.
+    if ([key isEqualToString:@"whoTook"]) {
+        return [NSNull null];
+    }else{
+        return [super serializeValue:value forKey:key];
+    }
+}
+
 @end

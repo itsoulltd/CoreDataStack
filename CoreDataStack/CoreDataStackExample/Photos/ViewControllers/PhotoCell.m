@@ -7,8 +7,16 @@
 //
 
 #import "PhotoCell.h"
+#import "PhotoGrapher.h"
 
 @implementation PhotoCell
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    self.thumbnailView.layer.masksToBounds = YES;
+    self.thumbnailView.layer.cornerRadius = 2.80f;
+    self.thumbnailView.layer.borderWidth = 1.0f;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -32,6 +40,16 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)updateCell:(Photo *)photo{
+    self.title.text = photo.title;
+    //
+    if (photo.whoTook.name != nil) {
+        self.detail.text = [NSString stringWithFormat:@"taken by %@, Total taken %lu",photo.whoTook.name,(unsigned long)photo.whoTook.photos.count];
+    }else{
+        self.detail.text = [NSString stringWithFormat:@"at location %@",photo.location];
+    }
 }
 
 @end

@@ -15,6 +15,9 @@
 
 @interface PhotoListController ()
 @property (nonatomic, strong) NSMutableArray *photos;
+@property (nonatomic, strong) NSArray *names;
+@property (nonatomic, strong) NSArray *places;
+@property (nonatomic, strong) NSArray *titles;
 - (IBAction)backgroundAction:(id)sender;
 - (IBAction)deleteAction:(id)sender;
 @end
@@ -32,6 +35,27 @@ static NSString *CellIdentifier = @"cellId";
     return self;
 }
 
+- (NSArray *)titles{
+    if (_titles == nil) {
+        _titles = @[@"Mount Everest",@"Danger K2",@"Beautiful Anapurna"];
+    }
+    return _titles;
+}
+
+- (NSArray *)names{
+    if (_names == nil) {
+        _names = @[@"Josh",@"Bengamin",@"Sarah"];
+    }
+    return _names;
+}
+
+- (NSArray *)places{
+    if (_places == nil) {
+        _places = @[@"Everest",@"K2",@"Anapurna"];
+    }
+    return _places;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,7 +63,7 @@ static NSString *CellIdentifier = @"cellId";
     self.clearsSelectionOnViewWillAppear = NO;
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     //[self.tableView registerClass:[PhotoCell class] forCellReuseIdentifier:CellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"PhotoCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    //[self.tableView registerNib:[UINib nibWithNibName:@"PhotoCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     [self loadDataFromStore];
 }
 
@@ -151,15 +175,7 @@ static NSString *CellIdentifier = @"cellId";
     if ([cell isKindOfClass:[PhotoCell class]]) {
         Photo *photo = self.photos[indexPath.row];
         PhotoCell *pCell = (PhotoCell*)cell;
-        pCell.title.text = photo.title;
-        NSString *detail = photo.location;
-        if (photo.whoTook) {
-            detail = [NSString stringWithFormat:@"taken by %@, at location %@",photo.whoTook.name,photo.location];
-        }
-        pCell.detail.text = detail;
-        pCell.thumbnailView.layer.masksToBounds = YES;
-        pCell.thumbnailView.layer.cornerRadius = 2.80f;
-        pCell.thumbnailView.layer.borderWidth = 1.0f;
+        [pCell updateCell:photo];
     }
     
     return cell;
@@ -223,14 +239,10 @@ static NSString *CellIdentifier = @"cellId";
         
         NSManagedObjectContext *backgroundContext = [[NGKeyedContext sharedInstance] cloneContextForKey:@"CoreDataTest"];
         
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        request.entity = [NSEntityDescription entityForName:@"Photo" inManagedObjectContext:backgroundContext];
-        
-        /*NSInteger count = [chupaContext countForFetchRequest:request error:NULL];*/
         NSUInteger count = [Photo rows:backgroundContext];
         NSLog(@"Dispatch To Background : Delete : %ld",(long)count);
         
-        NSArray *items = [backgroundContext executeFetchRequest:request error:NULL];
+        NSArray *items = [Photo read:nil context:backgroundContext];
         if (items && items.count > 0) {
             for (Photo *photo in items) {
                 [backgroundContext deleteObject:photo];
@@ -244,36 +256,46 @@ static NSString *CellIdentifier = @"cellId";
 }
 
 - (void) addObjectToStore:(NSManagedObjectContext*)_managedObjectContext{
-    
-    PhotoGrapher *pGrapher = [PhotoGrapher insertIntoContext:_managedObjectContext withProperties:@{@"name":@"towhid",@"age":@32}];
-    
+    //Photo and PhotoGrapher 1
     NSLog(@"------------------------------------------------------------------------------------------");
-    Photo *photo = [Photo insertIntoContext:_managedObjectContext withProperties:@{@"location":@"dhaka",@"title":@"Bindas",@"photoId":@"123456",@"datetimeAtTook":@"04-04-2014 12:34:21"}];
-    photo.whoTook = pGrapher;
-    if (!pGrapher.photos) {
-        NSOrderedSet *photos = [[NSOrderedSet alloc] initWithObject:photo];
-        pGrapher.photos = photos;
-    }
-    else{
-        NSMutableOrderedSet *photos = [[NSMutableOrderedSet alloc] initWithOrderedSet:pGrapher.photos];
-        [photos addObject:photo];
-        pGrapher.photos = photos;
-    }
+    NSString *location = self.places[arc4random() % self.places.count];
+    NSString *title = self.titles[arc4random() % self.titles.count];
     
+    Photo *photo = [Photo insertIntoContext:_managedObjectContext withProperties:@{@"location":location
+                                                                                   ,@"title":title
+                                                                                   ,@"photoId":[NSUUID UUID].UUIDString
+                                                                                   ,@"datetimeAtTook":[NSDate date]}];
+    
+    NSString *pgname = self.names[arc4random() % self.names.count];
+    PhotoGrapher *pGrapher = [PhotoGrapher findByName:pgname context:_managedObjectContext];
+    if (pGrapher == nil) {
+        pGrapher = [PhotoGrapher insertIntoContext:_managedObjectContext withProperties:@{@"name":pgname,@"age":@32}];
+    }
+    [pGrapher addPhotosObject:photo];
+    Address *photographerAdd = [Address insertIntoContext:_managedObjectContext withProperties:@{@"street":@"---",@"city":@"---"}];
+    [pGrapher addAddressesObject:photographerAdd];
     NSLog(@"--------------------------------------------------------------------------------------------");
-    Address *photographerAdd = [Address insertIntoContext:_managedObjectContext withProperties:@{@"street":@"1323 Shewrapara",@"city":@"Dhaka"}];
-    photographerAdd.whoLive = photo.whoTook;
     
+    //Photo and PhotoGrapher 2
     NSLog(@"--------------------------------------------------------------------------------------------");
     NSData *jsonData = [photo serializeIntoJSON];
-    NSLog(@"JSON string %@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-    id json = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:NULL];
-    NSLog(@"%@",json);
+    NSLog(@"JSON encoded string %@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    NSLog(@"Recreate NSDictionary from JSON Data : %@",[NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:NULL]);
     
     NSLog(@"--------------------------------------------------------------------------------------------");
     Photo *newPhoto = [Photo insertIntoContext:_managedObjectContext withJSON:jsonData];
-    [newPhoto write:@{@"title":@"andaz aupna aupna"}];
+    title = self.titles[arc4random() % self.titles.count];
+    [newPhoto write:@{@"title":title
+                      ,@"photoId":[NSUUID UUID].UUIDString
+                      ,@"datetimeAtTook":[NSDate date]
+                      }];
     NSLog(@"%@",[newPhoto serializeIntoInfo]);
+    NSString *pgname2 = self.names[arc4random() % self.names.count];
+    PhotoGrapher *pGrapher2 = [PhotoGrapher findByName:pgname2 context:_managedObjectContext];
+    if (pGrapher2 == nil) {
+        pGrapher2 = [PhotoGrapher insertIntoContext:_managedObjectContext withProperties:@{@"name":pgname2,@"age":@32}];
+    }
+    [pGrapher2 addPhotosObject:newPhoto];
     
 }
 

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Photo.h"
 
 @interface PhotoCell : UITableViewCell
 @property (nonatomic, weak) IBOutlet UILabel *title;
 @property (nonatomic, weak) IBOutlet UILabel *detail;
 @property (nonatomic, weak) IBOutlet UIImageView *thumbnailView;
+- (void) updateCell:(Photo*)photo;
 @end
