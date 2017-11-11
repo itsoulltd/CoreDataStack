@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="16G29" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Address" representedClassName="Address" parentEntity="NGCoreObject" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="whoLive" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PhotoGrapher" inverseName="addresses" inverseEntity="PhotoGrapher" syncable="YES"/>
+    </entity>
+    <entity name="NGCoreObject" representedClassName="NGCoreObject" syncable="YES">
+        <attribute name="guid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" parentEntity="NGCoreObject" syncable="YES">
+        <attribute name="datetimeAtTook" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" elementID="name" syncable="YES"/>
+        <relationship name="whoTook" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PhotoGrapher" inverseName="photos" inverseEntity="PhotoGrapher" syncable="YES"/>
+    </entity>
+    <entity name="PhotoGrapher" representedClassName="PhotoGrapher" parentEntity="NGCoreObject" syncable="YES">
+        <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="contactNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Address" inverseName="whoLive" inverseEntity="Address" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Photo" inverseName="whoTook" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Address" positionX="-621" positionY="-99" width="128" height="135"/>
+        <element name="Photo" positionX="-191" positionY="-189" width="128" height="120"/>
+        <element name="PhotoGrapher" positionX="-414" positionY="-100" width="128" height="135"/>
+        <element name="NGCoreObject" positionX="-405" positionY="-81" width="128" height="60"/>
+    </elements>
+</model>

@@ -183,7 +183,7 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:KGDefaultManagedContextDidMergeNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NGDefaultManagedContextDidMergeNotification object:nil userInfo:userInfo];
     });
 }
 

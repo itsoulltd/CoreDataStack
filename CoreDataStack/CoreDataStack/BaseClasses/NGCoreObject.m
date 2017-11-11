@@ -1,5 +1,5 @@
 //
-//  DNCoreObject.m
+//  NGCoreObject.m
 //  StartupProjectSampleA
 //
 //  Created by Towhid Islam on 4/12/15.
@@ -34,7 +34,7 @@
     return predicate;
 }
 
-#pragma DNCoreObjectProtocol Implementation
+#pragma NGCoreObjectProtocol Implementation
 
 + (NSUInteger)rows:(NSManagedObjectContext *)context{
     //

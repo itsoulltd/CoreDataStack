@@ -166,7 +166,7 @@
     }
 }
 
-NSString* const KGDefaultManagedContextDidMergeNotification = @"AppDefaultContextDidMergeNotification";
+NSString* const NGDefaultManagedContextDidMergeNotification = @"AppDefaultContextDidMergeNotification";
 
 - (void)contextDidSave:(NSNotification*)notification {
     
@@ -224,7 +224,7 @@ NSString* const KGDefaultManagedContextDidMergeNotification = @"AppDefaultContex
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:KGDefaultManagedContextDidMergeNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NGDefaultManagedContextDidMergeNotification object:nil userInfo:userInfo];
     });
 }
 
