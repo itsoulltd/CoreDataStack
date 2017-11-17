@@ -12,15 +12,20 @@
 
 @implementation Student
 
++ (NSManagedObjectContext*) getDefaultContext{
+    //User [[NGCoreDataContext sharedInstance] defaultContext] to get a default context, if you have only one Xcdatamodel file.
+    return [[NGKeyedContext sharedInstance] contextForKey:@"Model"];
+}
+
 + (BOOL)exist:(NSString *)guid{
-    NSManagedObjectContext *context = [[NGCoreDataContext sharedInstance] defaultContext];
+    NSManagedObjectContext *context = [self getDefaultContext];
     NGCoreObject *obj = [Student readByGuid:guid context:context];
     return obj != nil;
 }
 
 + (NSArray<Student *> *)getAllStudents{
     
-    NSManagedObjectContext *context = [[NGCoreDataContext sharedInstance] defaultContext];
+    NSManagedObjectContext *context = [self getDefaultContext];
     //Basic way
     /*
     NSFetchRequest *request = [self fetchRequest];
@@ -33,7 +38,7 @@
 
 + (void)addStudent:(NSDictionary *)info{
     
-    NSManagedObjectContext *context = [[NGCoreDataContext sharedInstance] defaultContext];
+    NSManagedObjectContext *context = [self getDefaultContext];
     //Basic way
     /*
     Student *std = (Student*)[NSEntityDescription insertNewObjectForEntityForName:@"Student" inManagedObjectContext:context];
@@ -49,7 +54,7 @@
 
 + (void)updateStudent:(NSDictionary *)info{
     
-    NSManagedObjectContext *context = [[NGCoreDataContext sharedInstance] defaultContext];
+    NSManagedObjectContext *context = [self getDefaultContext];
     //Basic way
     /*
     NSFetchRequest *request = [self fetchRequest];
