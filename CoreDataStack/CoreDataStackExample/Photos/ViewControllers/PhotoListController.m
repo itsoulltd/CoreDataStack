@@ -205,6 +205,8 @@ static NSString *CellIdentifier = @"cellId";
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     
     dispatch_async(queue, ^{
+        
+        [NSThread sleepForTimeInterval:2.40];//2.40 sec pause, b/w insert and save&merge
        
         NSManagedObjectContext *backbgoundContext = [[NGKeyedContext sharedInstance] cloneContextForKey:@"CoreDataTest"];
         
@@ -216,9 +218,6 @@ static NSString *CellIdentifier = @"cellId";
         NSLog(@"Dispatch To Background : Eexecuted : %ld",(long)count);
         
         [self addObjectToStore:backbgoundContext];
-        
-        [NSThread sleepForTimeInterval:2.40];//2.40 sec pause, b/w insert and save&merge
-        
         [[NGKeyedContext sharedInstance] mergeContextForKey:@"CoreDataTest" fromContext:backbgoundContext];
     });
     
@@ -248,8 +247,6 @@ static NSString *CellIdentifier = @"cellId";
                 [backgroundContext deleteObject:photo];
             }
         }
-        //No delay in delete operation.
-        //[NSThread sleepForTimeInterval:2.40];//2.40 sec pause, b/w insert and save&merge
         
         [[NGKeyedContext sharedInstance] mergeContextForKey:@"CoreDataTest" fromContext:backgroundContext];
     });
