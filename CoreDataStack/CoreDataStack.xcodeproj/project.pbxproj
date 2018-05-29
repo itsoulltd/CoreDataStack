@@ -82,6 +82,8 @@
 		26F8BC571FB7710F006CA051 /* DateSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8BC531FB7710F006CA051 /* DateSort.swift */; };
 		26F8BC581FB7710F006CA051 /* NumericSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8BC541FB7710F006CA051 /* NumericSort.swift */; };
 		26F8BC591FB7710F006CA051 /* SortCommend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8BC551FB7710F006CA051 /* SortCommend.swift */; };
+		8F33018A20BD1CC2007BC002 /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F33018920BD1CC2007BC002 /* NSObject+Properties.m */; };
+		8F33018D20BD1FE2007BC002 /* NGPrimitiveObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F33018C20BD1FE2007BC002 /* NGPrimitiveObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +189,10 @@
 		26F8BC531FB7710F006CA051 /* DateSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSort.swift; sourceTree = "<group>"; };
 		26F8BC541FB7710F006CA051 /* NumericSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericSort.swift; sourceTree = "<group>"; };
 		26F8BC551FB7710F006CA051 /* SortCommend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortCommend.swift; sourceTree = "<group>"; };
+		8F33018820BD1CC2007BC002 /* NSObject+Properties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
+		8F33018920BD1CC2007BC002 /* NSObject+Properties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
+		8F33018B20BD1FE2007BC002 /* NGPrimitiveObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGPrimitiveObject.h; sourceTree = "<group>"; };
+		8F33018C20BD1FE2007BC002 /* NGPrimitiveObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGPrimitiveObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +312,7 @@
 		267D4D441F91E2B800F0A1A9 /* CoreDataStackExample */ = {
 			isa = PBXGroup;
 			children = (
+				8F33018720BD1BAA007BC002 /* NGObjectExtension */,
 				26F8BC511FB7710F006CA051 /* SortCommends */,
 				26F8BC4E1FB769AA006CA051 /* NGCoreObjectExtension */,
 				26F8BC191FB74237006CA051 /* Photos */,
@@ -417,6 +424,17 @@
 				26F8BC551FB7710F006CA051 /* SortCommend.swift */,
 			);
 			path = SortCommends;
+			sourceTree = "<group>";
+		};
+		8F33018720BD1BAA007BC002 /* NGObjectExtension */ = {
+			isa = PBXGroup;
+			children = (
+				8F33018820BD1CC2007BC002 /* NSObject+Properties.h */,
+				8F33018920BD1CC2007BC002 /* NSObject+Properties.m */,
+				8F33018B20BD1FE2007BC002 /* NGPrimitiveObject.h */,
+				8F33018C20BD1FE2007BC002 /* NGPrimitiveObject.m */,
+			);
+			path = NGObjectExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -622,6 +640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F33018D20BD1FE2007BC002 /* NGPrimitiveObject.m in Sources */,
 				26F8BC2F1FB742A1006CA051 /* Address.m in Sources */,
 				26F8BC581FB7710F006CA051 /* NumericSort.swift in Sources */,
 				26F8BC181FB70D80006CA051 /* Car+CoreDataProperties.swift in Sources */,
@@ -634,6 +653,7 @@
 				26F8BC351FB742A1006CA051 /* PhotoListController.m in Sources */,
 				26F8BC171FB70D80006CA051 /* Car+CoreDataClass.swift in Sources */,
 				26F8BC091FB709E1006CA051 /* Model.xcdatamodeld in Sources */,
+				8F33018A20BD1CC2007BC002 /* NSObject+Properties.m in Sources */,
 				26F8BC301FB742A1006CA051 /* Photo+Photo_Helper.m in Sources */,
 				26F8BC311FB742A1006CA051 /* Photo.m in Sources */,
 				26F8BC331FB742A1006CA051 /* PhotoCell.m in Sources */,

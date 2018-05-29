@@ -8,7 +8,7 @@
 
 #import "NSArray+FilterAndSorting.h"
 
-@implementation NSArray (FilterAndSorting)
+@implementation NSArray (NGFilterAndSorting)
 
 - (void)dealloc{
     //NSLog(@"dealloc %@",NSStringFromClass([self class]));
