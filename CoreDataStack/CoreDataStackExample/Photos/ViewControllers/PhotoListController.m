@@ -194,14 +194,12 @@ static NSString *CellIdentifier = @"cellId";
  */
 
 - (IBAction)backgroundAction:(id)sender {
-    
     NSLog(@"Dispatch To Background");
-    
-    //queue could be the main queue. Then clone context and its saveing will execute on main thread.
-    //try with main queue and check the UI performance
-    //dispatch_queue_t queue = dispatch_get_main_queue();
-    
-    //For outstanding performance comment-out following line and comment the above line.
+    /**
+     * Calling -mergeContextForKey:fromContext: from main-queue will causes certain crash.
+     * Background-context must be created in backgroud queue, using -cloneContextForKey: method.
+     * After that merge that context with other context tracked by NGKeyedContext.
+     */
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     
     dispatch_async(queue, ^{
@@ -224,14 +222,12 @@ static NSString *CellIdentifier = @"cellId";
 }
 
 - (IBAction)deleteAction:(id)sender {
-    
     NSLog(@"Dispatch To Background Delete");
-    
-    //queue could be the main queue. Then clone context and its saveing will execute on main thread.
-    //try with main queue and check the UI performance
-    //dispatch_queue_t queue = dispatch_get_main_queue();
-    
-    //For outstanding performance comment-out following line and comment the above line.
+    /**
+     * Calling -mergeContextForKey:fromContext: from main-queue will causes certain crash.
+     * Background-context must be created in backgroud queue, using -cloneContextForKey: method.
+     * After that merge that context with other context tracked by NGKeyedContext.
+     */
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     
     dispatch_async(queue, ^{
