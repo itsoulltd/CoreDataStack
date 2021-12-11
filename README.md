@@ -30,18 +30,18 @@
                                           ,@"datetimeAtTook":[NSDate date]}];
     
     //We know update/delete relatively easy using context.
-    //
-    //For updating first find the Object, using -read:(NSDictionary) context:(NSManagedContext) api:
+    
+    //For updating..
+    //first find the Object, using -read:(NSDictionary) context:(NSManagedContext) api:
     //where we can provide search criteria for an object: e.g. finding photo by title = @"photo-title"
+    //
     NSArray* photos = [Photo read:@{@"title":@"Mount Everest"} context:context];
     Photo *photoToUpdate = photos[0];
-    //..do update property
+    //..update
     [context save:nil];
-    //will update the object in the context and later on persistance storage.
-    //
+    
     //For Deleting..
     [context deleteObject: photoToUpdate];
-    //is more then enough.
     
 ###How deal with multiple context .e.g one context for main-thread others are for background thread
     
