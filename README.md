@@ -1,5 +1,5 @@
 # CoreDataStack
-### How to initialize a core-data-context using CoreDataStack
+### How to initialize a core-data-context using CoreDataStack:
 	
 	//Lets say you have a core-data model named: CoreDataTest.xcdatamodeld file
 	//where usually all models are laied down.
@@ -43,7 +43,8 @@
     //For Deleting..
     [context deleteObject: photoToUpdate];
     
-###How deal with multiple context .e.g one context for main-thread others are for background thread
+###How to deal with multiple-context:
+####.e.g one context for main-thread others are for background thread
     
     /**
      * Calling -mergeContextForKey:fromContext: from main-queue will causes certain crash.
