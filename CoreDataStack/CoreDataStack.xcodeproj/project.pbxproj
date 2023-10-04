@@ -612,7 +612,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"CoreDataStack\"\n\n#Here we create default directory structure on desktop if not exist\nmkdir -p \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild\"\nmkdir -p \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/Release\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Debug -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Debug -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework\"\nfi\n#Remove release build also\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Debug-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\"\n\ncp -r \"${SRCROOT}/build/Debug-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Debug-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Debug-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\ncp -r \"${SRCROOT}/build/Debug-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"CoreDataStack\"\n\n#Here we create default directory structure on desktop if not exist\nmkdir -p \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild\"\nmkdir -p \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Debug -arch arm64 only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Debug -arch x86_64 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on target-dir from previous run.\nif [ -d \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework\"\nfi\n#Remove release build also\n# Remove .framework file if exists on target-dir from previous run.\nif [ -d \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to target-dir.\ncp -r \"${SRCROOT}/build/Debug-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\"\n\ncp -r \"${SRCROOT}/build/Debug-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Debug-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Debug-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\ncp -r \"${SRCROOT}/build/Debug-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/FatBuild/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -828,6 +828,7 @@
 		26456E6C1F765FA7003AEF53 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -838,7 +839,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CoreDataStack/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swift.CoreDataStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -851,6 +852,7 @@
 		26456E6D1F765FA7003AEF53 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -861,7 +863,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CoreDataStack/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swift.CoreDataStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -909,6 +911,7 @@
 		26A1E4241FC8058D003F069E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M622GQ77LE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -918,6 +921,7 @@
 		26A1E4251FC8058D003F069E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M622GQ77LE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
