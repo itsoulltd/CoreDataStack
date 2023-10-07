@@ -229,6 +229,7 @@
 				267D4D441F91E2B800F0A1A9 /* CoreDataStackExample */,
 				26F8BC3E1FB74DCB006CA051 /* CoreDataStackTests */,
 				26456E641F765FA7003AEF53 /* Products */,
+				268C51942AD1BB2200CE5482 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -325,6 +326,13 @@
 				267D4D511F91E2B800F0A1A9 /* Info.plist */,
 			);
 			path = CoreDataStackExample;
+			sourceTree = "<group>";
+		};
+		268C51942AD1BB2200CE5482 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		26F8BBF51FB7098E006CA051 /* CoreDataModels */ = {
