@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		268C51972AD1BCBC00CE5482 /* Aggregate-v2 */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 268C51982AD1BCBC00CE5482 /* Build configuration list for PBXAggregateTarget "Aggregate-v2" */;
+			buildPhases = (
+				268C519B2AD1BD0300CE5482 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Aggregate-v2";
+			productName = "Aggregate-v2";
+		};
 		26A1E4231FC8058D003F069E /* Aggregator */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 26A1E4261FC8058D003F069E /* Build configuration list for PBXAggregateTarget "Aggregator" */;
@@ -547,6 +558,10 @@
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
+					268C51972AD1BCBC00CE5482 = {
+						CreatedOnToolsVersion = 14.2;
+						ProvisioningStyle = Automatic;
+					};
 					26A1E4231FC8058D003F069E = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
@@ -575,6 +590,7 @@
 				267D4D421F91E2B700F0A1A9 /* CoreDataStackExample */,
 				26F8BC3C1FB74DCA006CA051 /* CoreDataStackTests */,
 				26A1E4231FC8058D003F069E /* Aggregator */,
+				268C51972AD1BCBC00CE5482 /* Aggregate-v2 */,
 			);
 		};
 /* End PBXProject section */
@@ -610,6 +626,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		268C519B2AD1BD0300CE5482 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"CoreDataStack\"\n#Here we create default directory structure on desktop if not exist\nmkdir -p \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release\"\n\n# 3\n# Build the framework for device and for simulator (using all needed architectures).\nxcodebuild archive \n    -project CoreDataStack.xcodeproj\n    -scheme CoreDataStack\n    -destination \"generic/platform=iOS\"\n    -destination \"generic/platform=iOS Simulator\"\n    -archivePath \"archives/CoreDataStack\"\n#\n\n# 4\n# Remove .framework files too from release-dir if exists from previous run.\nif [ -d \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\" ]; \nthen rm -rf \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 5\nxcodebuild -create-xcframework\n    -archive archives/CoreDataStack-iOS.xcarchive -framework CoreDataStack.framework\n    -archive archives/CoreDataStack-iOS_Simulator.xcarchive -framework CoreDataStack.framework\n    -output xcframeworks/CoreDataStack.xcframework\n#\n\necho \"END OF LINE\"\n";
+		};
 		26A1E4271FC80593003F069E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -852,7 +885,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swift.CoreDataStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -876,7 +909,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swift.CoreDataStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -914,6 +947,28 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "CoreDataStackExample/CoreDataStackExample-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		268C51992AD1BCBC00CE5482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YS4F7VX5G2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+			};
+			name = Debug;
+		};
+		268C519A2AD1BCBC00CE5482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YS4F7VX5G2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};
@@ -991,6 +1046,15 @@
 			buildConfigurations = (
 				267D4D521F91E2B800F0A1A9 /* Debug */,
 				267D4D531F91E2B800F0A1A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		268C51982AD1BCBC00CE5482 /* Build configuration list for PBXAggregateTarget "Aggregate-v2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				268C51992AD1BCBC00CE5482 /* Debug */,
+				268C519A2AD1BCBC00CE5482 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
