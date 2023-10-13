@@ -953,6 +953,7 @@
 		2696B65C2AD9F2A100280B2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YS4F7VX5G2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -962,6 +963,7 @@
 		2696B65D2AD9F2A100280B2C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YS4F7VX5G2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
