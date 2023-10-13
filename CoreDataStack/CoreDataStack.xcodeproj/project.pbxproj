@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		268C51972AD1BCBC00CE5482 /* Aggregate-v2 */ = {
+		2696B65A2AD9F2A100280B2C /* Aggregator-v2 */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 268C51982AD1BCBC00CE5482 /* Build configuration list for PBXAggregateTarget "Aggregate-v2" */;
+			buildConfigurationList = 2696B65B2AD9F2A100280B2C /* Build configuration list for PBXAggregateTarget "Aggregator-v2" */;
 			buildPhases = (
-				268C519B2AD1BD0300CE5482 /* ShellScript */,
+				2696B65E2AD9F2CF00280B2C /* ShellScript */,
 			);
 			dependencies = (
 			);
-			name = "Aggregate-v2";
-			productName = "Aggregate-v2";
+			name = "Aggregator-v2";
+			productName = "Aggregator-v2";
 		};
 		26A1E4231FC8058D003F069E /* Aggregator */ = {
 			isa = PBXAggregateTarget;
@@ -558,7 +558,7 @@
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
-					268C51972AD1BCBC00CE5482 = {
+					2696B65A2AD9F2A100280B2C = {
 						CreatedOnToolsVersion = 14.2;
 						ProvisioningStyle = Automatic;
 					};
@@ -590,7 +590,7 @@
 				267D4D421F91E2B700F0A1A9 /* CoreDataStackExample */,
 				26F8BC3C1FB74DCA006CA051 /* CoreDataStackTests */,
 				26A1E4231FC8058D003F069E /* Aggregator */,
-				268C51972AD1BCBC00CE5482 /* Aggregate-v2 */,
+				2696B65A2AD9F2A100280B2C /* Aggregator-v2 */,
 			);
 		};
 /* End PBXProject section */
@@ -626,7 +626,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		268C519B2AD1BD0300CE5482 /* ShellScript */ = {
+		2696B65E2AD9F2CF00280B2C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -641,7 +641,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"CoreDataStack\"\n#Here we create default directory structure on desktop if not exist\nmkdir -p \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release\"\n\n# 3\n# Build the framework for device and for simulator (using all needed architectures).\nxcodebuild archive \n    -project CoreDataStack.xcodeproj\n    -scheme CoreDataStack\n    -destination \"generic/platform=iOS\"\n    -destination \"generic/platform=iOS Simulator\"\n    -archivePath \"archives/CoreDataStack\"\n#\n\n# 4\n# Remove .framework files too from release-dir if exists from previous run.\nif [ -d \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\" ]; \nthen rm -rf \"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/Release/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 5\nxcodebuild -create-xcframework\n    -archive archives/CoreDataStack-iOS.xcarchive -framework CoreDataStack.framework\n    -archive archives/CoreDataStack-iOS_Simulator.xcarchive -framework CoreDataStack.framework\n    -output xcframeworks/CoreDataStack.xcframework\n#\n\necho \"END OF LINE\"\n";
+			shellScript = "# Aggregate Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"CoreDataStack\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n###\n#UNIVERSAL_OUTPUTFOLDER=\"${BUILD_DIR}/${CONFIGURATION}-Universal\"\nUNIVERSAL_OUTPUTFOLDER=\"${HOME}/Downloads/NextGenBuilds/${FRAMEWORK_NAME}/${CONFIGURATION}\"\n\n# Make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Next, work out if we’re in SIMULATOR or REAL DEVICE\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk  iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\"  BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\nxcodebuild -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration  ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\"  BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\"  \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nBUILD_PRODUCTS=\"${SYMROOT}/../../../../Products\"\n\ncp -R \"${BUILD_PRODUCTS}/Debug-iphonesimulator/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"  \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output  \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"  \"${BUILD_PRODUCTS}/Debug-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\"  \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project’s directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}\"\n\n# Step 6. Convenience step to open the project’s directory in Finder\nopen \"${PROJECT_DIR}\"\nfi\n";
 		};
 		26A1E4271FC80593003F069E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -950,25 +950,21 @@
 			};
 			name = Release;
 		};
-		268C51992AD1BCBC00CE5482 /* Debug */ = {
+		2696B65C2AD9F2A100280B2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YS4F7VX5G2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
-		268C519A2AD1BCBC00CE5482 /* Release */ = {
+		2696B65D2AD9F2A100280B2C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YS4F7VX5G2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};
@@ -1050,11 +1046,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		268C51982AD1BCBC00CE5482 /* Build configuration list for PBXAggregateTarget "Aggregate-v2" */ = {
+		2696B65B2AD9F2A100280B2C /* Build configuration list for PBXAggregateTarget "Aggregator-v2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				268C51992AD1BCBC00CE5482 /* Debug */,
-				268C519A2AD1BCBC00CE5482 /* Release */,
+				2696B65C2AD9F2A100280B2C /* Debug */,
+				2696B65D2AD9F2A100280B2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
